@@ -1,6 +1,7 @@
 import click
 
-from py import playground
+from commands import playground
+from commands import wwg
 
 
 @click.group()
@@ -9,3 +10,4 @@ def cli():
 
 
 cli.add_command(playground.hello)
+cli.add_command(wwg.poi_info)

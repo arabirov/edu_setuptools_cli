@@ -5,6 +5,8 @@ VERSION = "0.1.0"
 # put your libraries here
 REQUIRES = [
     "Click>=6.6",
+    "requests>=2.21.0",
+    "urllib3>=1.24.0"
 ]
 
 setup(
@@ -19,7 +21,7 @@ setup(
     include_package_data=True,
     entry_points={
         'console_scripts': [
-            'playground=py:cli'
+            'playground=commands:cli'
         ],
     },
     classifiers=[
