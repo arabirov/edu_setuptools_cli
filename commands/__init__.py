@@ -11,3 +11,4 @@ def cli():
 
 cli.add_command(playground.hello)
 cli.add_command(wwg.poi_info)
+cli.add_command(wwg.poi_image)
