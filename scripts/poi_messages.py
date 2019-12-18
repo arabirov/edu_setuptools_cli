@@ -1,5 +1,6 @@
 from api.requests.poi import get_poi_by_id
 import requests
+from urllib import parse
 from constants import paths
 
 
@@ -34,14 +35,16 @@ def poi_id_image(poi_id):
     try:
         result = get_poi_by_id(poi_id).json()
         poi_info = result['data']['poi']
-        image_url = requests.get(poi_info['images'][0]['originalUrl'])
+        poi_image_uri = poi_info['images'][0]['originalUrl']
+        image_url = requests.get(poi_image_uri)
+        file_format = parse.urlsplit(poi_image_uri)[2].split('.')[1]
         image = image_url.content
         paths.folder_check()
-        image_file = open(paths.IMAGE_DIR+'image.png', mode='wb+')
+        image_file = open(paths.IMAGE_DIR + f'{poi_id}_image.{file_format}', mode='wb+')
         image_file.write(image)
         image_file.close()
-        return f"Image saved in {paths.IMAGE_DIR}"
+        return f"Image saved in {paths.IMAGE_DIR}{poi_id}_image.{file_format}"
     except IndexError:
-        return "Image doesn't exist."
+        return r"This POI doesn't have any images ¯\_(ツ)_/¯."
     except AttributeError:
         return get_poi_by_id(poi_id)
